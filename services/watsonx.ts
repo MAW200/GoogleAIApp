@@ -1,3 +1,4 @@
+// IBM Watsonx Orchestrate Integration
 import { KnowledgeGap, UserContext, InterviewAnswer } from "../types";
 
 // IBM Watsonx Orchestrate API Configuration
@@ -272,17 +273,40 @@ const parseKnowledgeGaps = (response: any): KnowledgeGap[] => {
       }
     }
 
-    // Validate and format gaps
+    // Validate and format gaps - all data must come from API response
     return gaps
-      .filter((gap: any) => gap && (gap.id || gap.title || gap.primaryQuestion))
-      .map((gap: any, index: number) => ({
-        id: gap.id || `gap-${index + 1}`,
-        title: gap.title || gap.name || `Knowledge Gap ${index + 1}`,
-        summary: gap.summary || gap.description || gap.risk || "Critical knowledge area",
-        primaryQuestion: gap.primaryQuestion || gap.question || gap.prompt || "Please describe this area of knowledge.",
-        memoryPrompt: gap.memoryPrompt || gap.memoryTrigger || gap.trigger || "Think about recent projects or incidents related to this.",
-        followUpQuestion: gap.followUpQuestion || gap.followUp || gap.detailQuestion || "Can you provide more specific details?",
-      }))
+      .filter((gap: any) => {
+        // Require essential fields from API response
+        return gap && (
+          (gap.id || gap.title || gap.primaryQuestion) &&
+          gap.title && 
+          gap.primaryQuestion
+        );
+      })
+      .map((gap: any, index: number) => {
+        // Extract fields from API response, throw error if required fields are missing
+        if (!gap.title) {
+          throw new Error(`Knowledge gap at index ${index} is missing required field: title`);
+        }
+        if (!gap.primaryQuestion) {
+          throw new Error(`Knowledge gap at index ${index} is missing required field: primaryQuestion`);
+        }
+
+        // All data must come from API - use alternative field names if API uses different structure
+        // but ensure required fields are present
+        return {
+          id: gap.id || `gap-${index + 1}`, // Generate ID if not provided by API
+          title: gap.title || gap.name || '', // Allow alternative field names from API
+          summary: gap.summary || gap.description || gap.risk || '', // Optional field, allow alternative names
+          primaryQuestion: gap.primaryQuestion || gap.question || gap.prompt || '', // Required, but allow alternative names
+          memoryPrompt: gap.memoryPrompt || gap.memoryTrigger || gap.trigger || '', // Optional field
+          followUpQuestion: gap.followUpQuestion || gap.followUp || gap.detailQuestion || '', // Optional field
+        };
+      })
+      .filter((gap: KnowledgeGap) => {
+        // Ensure all required fields are present and not empty
+        return gap.title && gap.title.trim() !== '' && gap.primaryQuestion && gap.primaryQuestion.trim() !== '';
+      })
       .slice(0, 4); // Ensure we only return 4 gaps
   } catch (error) {
     console.error("Error parsing knowledge gaps:", error);

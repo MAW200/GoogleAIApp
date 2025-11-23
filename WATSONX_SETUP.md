@@ -1,6 +1,6 @@
 # IBM Watsonx Orchestrate Integration Setup
 
-This application now uses IBM Watsonx Orchestrate API to generate knowledge gaps based on connected data sources.
+This application is fully integrated with IBM Watsonx Orchestrate as its primary backend. All AI operations (knowledge gap generation, document creation) are handled through Watsonx Orchestrate API using your configured API key and endpoint.
 
 ## Prerequisites
 

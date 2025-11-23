@@ -49,53 +49,9 @@ export const transcribeVideo = async (videoBlob: Blob): Promise<string> => {
 };
 
 export const generateGaps = async (context: UserContext): Promise<KnowledgeGap[]> => {
-  const ai = getClient();
-  
-  const prompt = `
-    You are an AI Orchestrator for an employee offboarding system.
-    The employee is leaving the company. Your goal is to identify "Knowledge Gaps" based on their role and department.
-    
-    Employee Context:
-    Name: ${context.name}
-    Role: ${context.role}
-    Department: ${context.department}
-    
-    Generate 4 specific, high-impact knowledge gaps that often occur when someone in this specific role leaves. 
-    For each gap, provide a structured interview question script.
-    Ensure the tone is professional, investigative but supportive.
-  `;
-
-  const schema: Schema = {
-    type: Type.ARRAY,
-    items: {
-      type: Type.OBJECT,
-      properties: {
-        id: { type: Type.STRING, description: "Unique identifier (e.g., gap-1)" },
-        title: { type: Type.STRING, description: "Short title of the knowledge gap (e.g., 'Legacy Payment API')" },
-        summary: { type: Type.STRING, description: "Why this is a risk (e.g., 'You are the only maintainer of X')" },
-        primaryQuestion: { type: Type.STRING, description: "The main open-ended question to ask." },
-        memoryPrompt: { type: Type.STRING, description: "A specific trigger to help them remember (e.g., 'Think about the Q4 outage...')" },
-        followUpQuestion: { type: Type.STRING, description: "A specific detail-oriented follow-up." },
-      },
-      required: ["id", "title", "summary", "primaryQuestion", "memoryPrompt", "followUpQuestion"],
-    },
-  };
-
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: prompt,
-    config: {
-      responseMimeType: "application/json",
-      responseSchema: schema,
-      systemInstruction: "You are an expert HR Knowledge Transfer specialist.",
-    },
-  });
-
-  if (response.text) {
-    return JSON.parse(response.text) as KnowledgeGap[];
-  }
-  
-  return [];
+  // This function is no longer used - the app now uses Watsonx Orchestrate
+  // Keeping this file only for video transcription functionality
+  throw new Error("Knowledge gap generation is handled by Watsonx Orchestrate. Please use the watsonx service instead.");
 };
 
 export const generateFinalHandover = async (context: UserContext, gaps: KnowledgeGap[], answers: Record<string, InterviewAnswer>): Promise<string> => {
@@ -115,12 +71,24 @@ export const generateFinalHandover = async (context: UserContext, gaps: Knowledg
     Transcript:
     ${interviewData}
     
-    Output Format: Markdown.
-    Structure:
-    1. Executive Summary
-    2. Critical Risks Identified
-    3. Detailed Knowledge Transfer (per topic)
-    4. Recommended Next Steps for the team taking over.
+    IMPORTANT: Output plain text only. Do NOT use any markdown formatting like asterisks (*), bold (**), headers (#), or any other markdown syntax.
+    Use only plain text with clear section titles in ALL CAPS, and separate sections with blank lines.
+    
+    Structure the document as follows:
+    
+    EXECUTIVE SUMMARY
+    [Provide a brief overview here]
+    
+    CRITICAL RISKS IDENTIFIED
+    [List the key risks here]
+    
+    DETAILED KNOWLEDGE TRANSFER
+    [For each topic, provide detailed information]
+    
+    RECOMMENDED NEXT STEPS
+    [Provide actionable recommendations]
+    
+    Use clear, professional language. Separate paragraphs with blank lines. Use numbered lists or bullet points only as plain text (e.g., "1. First item" or "- First item").
   `;
 
   const response = await ai.models.generateContent({

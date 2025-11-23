@@ -69,16 +69,16 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ gap, answerData, onAnswerUp
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col h-full">
+    <div className="bg-white rounded-xl shadow-sm border border-ibm-grey-200 overflow-hidden flex flex-col h-full">
       {/* Card Header - Gap Context */}
-      <div className="bg-slate-50 px-6 py-4 border-b border-slate-100">
+      <div className="bg-ibm-grey-50 px-6 py-4 border-b border-ibm-grey-100">
         <div className="flex items-start gap-3">
             <div className="bg-amber-100 p-2 rounded-lg text-amber-600 mt-1 shrink-0">
                 <AlertTriangle size={20} />
             </div>
             <div>
-                <h2 className="text-lg font-semibold text-slate-900">{gap.title}</h2>
-                <p className="text-sm text-slate-600 mt-1">{gap.summary}</p>
+                <h2 className="text-lg font-semibold text-ibm-grey-900">{gap.title}</h2>
+                <p className="text-sm text-ibm-grey-600 mt-1">{gap.summary}</p>
             </div>
         </div>
       </div>
@@ -90,28 +90,28 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ gap, answerData, onAnswerUp
             {/* Left Col: Question & Hints */}
             <div className="lg:col-span-2 space-y-6">
                 <div>
-                    <label className="block text-xs font-bold text-slate-400 uppercase tracking-wide mb-2">Primary Question</label>
-                    <p className="text-xl font-medium text-slate-800 leading-snug">{gap.primaryQuestion}</p>
+                    <label className="block text-xs font-bold text-ibm-grey-400 uppercase tracking-wide mb-2">Primary Question</label>
+                    <p className="text-xl font-medium text-ibm-grey-800 leading-snug">{gap.primaryQuestion}</p>
                 </div>
 
                 <div className="space-y-4">
-                    <div className="bg-indigo-50 p-4 rounded-lg border border-indigo-100">
-                        <div className="flex items-center gap-2 mb-2 text-indigo-700 text-sm font-semibold">
+                    <div className="bg-ibm-blue-50 p-4 rounded-lg border border-ibm-blue-100">
+                        <div className="flex items-center gap-2 mb-2 text-ibm-blue-700 text-sm font-semibold">
                             <Lightbulb size={16} />
                             <span>Memory Trigger</span>
                         </div>
-                        <p className="text-indigo-900 text-sm leading-relaxed">{gap.memoryPrompt}</p>
+                        <p className="text-ibm-blue-900 text-sm leading-relaxed">{gap.memoryPrompt}</p>
                     </div>
-                    <div className="bg-slate-50 p-4 rounded-lg border border-slate-100">
-                        <div className="text-slate-500 text-xs font-bold uppercase mb-2">Follow Up</div>
-                        <p className="text-slate-700 text-sm leading-relaxed">{gap.followUpQuestion}</p>
+                    <div className="bg-ibm-grey-50 p-4 rounded-lg border border-ibm-grey-100">
+                        <div className="text-ibm-grey-500 text-xs font-bold uppercase mb-2">Follow Up</div>
+                        <p className="text-ibm-grey-700 text-sm leading-relaxed">{gap.followUpQuestion}</p>
                     </div>
                 </div>
             </div>
 
             {/* Right Col: Video Interaction */}
             <div className="lg:col-span-3 flex flex-col gap-4">
-                 <label className="block text-xs font-bold text-slate-400 uppercase tracking-wide">Video Answer</label>
+                 <label className="block text-xs font-bold text-ibm-grey-400 uppercase tracking-wide">Video Answer</label>
                  
                  <VideoRecorder 
                     onRecordingComplete={handleRetake}
@@ -121,12 +121,12 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ gap, answerData, onAnswerUp
                  {/* Transcript Section */}
                  <div className="flex-1 flex flex-col mt-2">
                     <div className="flex items-center justify-between mb-2">
-                        <label className="flex items-center gap-2 text-xs font-bold text-slate-400 uppercase tracking-wide">
+                        <label className="flex items-center gap-2 text-xs font-bold text-ibm-grey-400 uppercase tracking-wide">
                             <FileText size={14} />
                             AI Transcript
                         </label>
                         {isTranscribing && (
-                            <span className="text-xs text-indigo-600 flex items-center gap-1 animate-pulse">
+                            <span className="text-xs text-ibm-blue-500 flex items-center gap-1 animate-pulse">
                                 <Sparkles size={12} /> Transcribing audio...
                             </span>
                         )}
@@ -138,7 +138,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({ gap, answerData, onAnswerUp
                     </div>
                     
                     <textarea
-                        className={`w-full flex-1 min-h-[120px] p-4 text-sm bg-slate-50 border rounded-lg resize-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all text-slate-700 leading-relaxed
+                        className={`w-full flex-1 min-h-[120px] p-4 text-sm bg-ibm-grey-50 border rounded-lg resize-none focus:ring-2 focus:ring-ibm-blue-500 focus:border-transparent outline-none transition-all text-ibm-grey-700 leading-relaxed
                         ${isTranscribing ? 'opacity-50' : 'opacity-100'}`}
                         placeholder={videoUrl ? "Processing audio..." : "Record a video to generate a transcript automatically. You can edit this text later."}
                         value={transcript}

@@ -99,10 +99,10 @@ const VideoRecorder: React.FC<VideoRecorderProps> = ({ onRecordingComplete, vide
 
   if (error) {
     return (
-      <div className="w-full aspect-video bg-slate-900 rounded-xl flex flex-col items-center justify-center text-slate-400 gap-2">
+      <div className="w-full aspect-video bg-ibm-grey-900 rounded-xl flex flex-col items-center justify-center text-ibm-grey-400 gap-2">
         <AlertCircle size={32} className="text-red-500" />
         <p>{error}</p>
-        <button onClick={startStream} className="text-indigo-400 hover:underline text-sm">Retry Camera</button>
+        <button onClick={startStream} className="text-ibm-blue-400 hover:underline text-sm">Retry Camera</button>
       </div>
     );
   }
@@ -126,7 +126,7 @@ const VideoRecorder: React.FC<VideoRecorderProps> = ({ onRecordingComplete, vide
   }
 
   return (
-    <div className="relative w-full aspect-video bg-slate-900 rounded-xl overflow-hidden shadow-inner isolate">
+    <div className="relative w-full aspect-video bg-ibm-grey-900 rounded-xl overflow-hidden shadow-inner isolate">
       {/* Camera Feed */}
       <video 
         ref={videoRef} 
@@ -138,8 +138,8 @@ const VideoRecorder: React.FC<VideoRecorderProps> = ({ onRecordingComplete, vide
 
       {/* Loading State */}
       {!isStreamReady && (
-        <div className="absolute inset-0 flex items-center justify-center text-slate-500">
-           <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-slate-600 mb-2"></div>
+        <div className="absolute inset-0 flex items-center justify-center text-ibm-grey-500">
+           <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-ibm-grey-600 mb-2"></div>
         </div>
       )}
 
@@ -165,7 +165,7 @@ const VideoRecorder: React.FC<VideoRecorderProps> = ({ onRecordingComplete, vide
             disabled={!isStreamReady}
             className="w-16 h-16 rounded-full border-4 border-white flex items-center justify-center hover:bg-white/20 transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
           >
-             <div className="w-14 h-14 bg-red-600 rounded-full border-2 border-slate-900"></div>
+             <div className="w-14 h-14 bg-red-600 rounded-full border-2 border-ibm-grey-900"></div>
           </button>
         )}
       </div>

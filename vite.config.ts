@@ -17,10 +17,10 @@ export default defineConfig(({ mode }) => {
       },
       plugins: [react()],
       define: {
-        // Gemini API (for video transcription)
+        // Gemini API (for video transcription only)
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY || ''),
         'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY || ''),
-        // IBM Watsonx Orchestrate API
+        // IBM Watsonx Orchestrate API (primary backend)
         'process.env.WATSONX_API_ENDPOINT': JSON.stringify(env.WATSONX_API_ENDPOINT || env.WATSONX_ORCHESTRATE_ENDPOINT || ''),
         'process.env.WATSONX_ORCHESTRATE_ENDPOINT': JSON.stringify(env.WATSONX_ORCHESTRATE_ENDPOINT || env.WATSONX_API_ENDPOINT || ''),
         'process.env.WATSONX_API_KEY': JSON.stringify(env.WATSONX_API_KEY || env.WATSONX_ORCHESTRATE_API_KEY || ''),
