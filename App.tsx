@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { KnowledgeGap, InterviewAnswer, AppState, UserContext } from './types';
-import { generateGaps, generateFinalHandover } from './services/gemini';
+import { generateGaps, generateFinalHandover } from './services/watsonx';
 import WelcomeScreen from './components/WelcomeScreen';
 import QuestionCard from './components/QuestionCard';
 import ProgressBar from './components/ProgressBar';
